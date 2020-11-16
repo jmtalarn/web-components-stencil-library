@@ -1,0 +1,11 @@
+:host {
+  display: block;
+}
+
+article {
+  width: 20rem;
+
+  box-shadow: 1px 1px 1px transparent;
+  padding: 0.5rem;
+  margin: 1rem;
+}
