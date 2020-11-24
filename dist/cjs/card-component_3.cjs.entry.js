@@ -35,5 +35,18 @@ const MyComponent = class {
 };
 MyComponent.style = myComponentCss;
 
+const rssReaderCss = ":host{display:block}";
+
+const RssReader = class {
+  constructor(hostRef) {
+    index.registerInstance(this, hostRef);
+  }
+  render() {
+    return (index.h(index.Host, null, index.h("h3", null, "This is a RSS Reader"), index.h("slot", null)));
+  }
+};
+RssReader.style = rssReaderCss;
+
 exports.card_component = CardComponent;
 exports.my_component = MyComponent;
+exports.rss_reader = RssReader;

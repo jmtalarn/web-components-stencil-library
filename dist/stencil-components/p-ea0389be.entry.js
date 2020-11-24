@@ -1,1 +1,0 @@
-import{r as s,h as r,H as l}from"./p-2fcf79ae.js";const a=class{constructor(r){s(this,r)}render(){return r(l,null,r("h3",null,"This is a RSS Reader"),r("slot",null))}};a.style=":host{display:block}";export{a as rss_reader}

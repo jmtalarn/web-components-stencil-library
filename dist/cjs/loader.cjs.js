@@ -14,7 +14,7 @@ const patchEsm = () => {
 const defineCustomElements = (win, options) => {
   if (typeof window === 'undefined') return Promise.resolve();
   return patchEsm().then(() => {
-  return index.bootstrapLazy([["card-component_2.cjs",[[1,"card-component",{"cardTitle":[1,"card-title"]}],[1,"my-component",{"first":[1],"middle":[1],"last":[1]}]]],["rss-reader.cjs",[[1,"rss-reader"]]]], options);
+  return index.bootstrapLazy([["card-component_3.cjs",[[1,"card-component",{"cardTitle":[1,"card-title"]}],[1,"my-component",{"first":[1],"middle":[1],"last":[1]}],[1,"rss-reader"]]]], options);
   });
 };
 

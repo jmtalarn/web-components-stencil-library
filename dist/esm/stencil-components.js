@@ -13,5 +13,5 @@ const patchBrowser = () => {
 };
 
 patchBrowser().then(options => {
-  return bootstrapLazy([["card-component_2",[[1,"card-component",{"cardTitle":[1,"card-title"]}],[1,"my-component",{"first":[1],"middle":[1],"last":[1]}]]],["rss-reader",[[1,"rss-reader"]]]], options);
+  return bootstrapLazy([["card-component_3",[[1,"card-component",{"cardTitle":[1,"card-title"]}],[1,"my-component",{"first":[1],"middle":[1],"last":[1]}],[1,"rss-reader"]]]], options);
 });
