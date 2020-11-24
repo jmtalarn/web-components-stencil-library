@@ -24,6 +24,9 @@ export namespace Components {
         "middle": string;
     }
     interface RssReader {
+        "count": number;
+        "name": string;
+        "url": string;
     }
 }
 declare global {
@@ -70,6 +73,9 @@ declare namespace LocalJSX {
         "middle"?: string;
     }
     interface RssReader {
+        "count"?: number;
+        "name"?: string;
+        "url"?: string;
     }
     interface IntrinsicElements {
         "card-component": CardComponent;

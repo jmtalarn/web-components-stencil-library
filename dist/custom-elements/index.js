@@ -43,16 +43,19 @@ const RssReader = class extends HTMLElement {
     super();
     this.__registerHost();
     attachShadow(this);
+    this.url = 'https://blog.jmtalarn.com/feed.xml';
+    this.name = 'Web dev notes';
+    this.count = 5;
   }
   render() {
-    return (h(Host, null, h("h3", null, "This is a RSS Reader"), h("slot", null)));
+    return (h(Host, null, h("h3", null, this.name, " ", this.count), h("a", { href: "{this.url}" }, this.url), h("slot", null)));
   }
   static get style() { return rssReaderCss; }
 };
 
 const CardComponent$1 = /*@__PURE__*/proxyCustomElement(CardComponent, [1,"card-component",{"cardTitle":[1,"card-title"]}]);
 const MyComponent$1 = /*@__PURE__*/proxyCustomElement(MyComponent, [1,"my-component",{"first":[1],"middle":[1],"last":[1]}]);
-const RssReader$1 = /*@__PURE__*/proxyCustomElement(RssReader, [1,"rss-reader"]);
+const RssReader$1 = /*@__PURE__*/proxyCustomElement(RssReader, [1,"rss-reader",{"url":[1],"name":[1],"count":[2]}]);
 const defineCustomElements = (opts) => {
   if (typeof customElements !== 'undefined') {
     [
