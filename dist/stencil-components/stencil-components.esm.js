@@ -1,0 +1,1 @@
+import{p as e,b as r}from"./p-2fcf79ae.js";(()=>{const r=import.meta.url,t={};return""!==r&&(t.resourcesUrl=new URL(".",r).href),e(t)})().then((e=>r([["p-6e7d5cba",[[1,"card-component",{cardTitle:[1,"card-title"]}],[1,"my-component",{first:[1],middle:[1],last:[1]}]]],["p-ea0389be",[[1,"rss-reader"]]]],e)));
