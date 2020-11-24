@@ -1,9 +1,10 @@
-import { Component, Host, h, Prop } from '@stencil/core';
+import { Component, Element, Host, h, Prop } from '@stencil/core';
 export class RssReader {
   constructor() {
     this.url = 'https://blog.jmtalarn.com/feed.xml';
     this.name = 'Web dev notes';
     this.count = 5;
+    this.display = 'list';
     this.feed = [];
   }
   async componentWillLoad() {
@@ -12,13 +13,14 @@ export class RssReader {
     this.feed = Array.from(new window.DOMParser().parseFromString(text, 'text/xml').scrollingElement.children[0].children)
       .filter(item => item.tagName === 'item')
       .slice(0, this.count)
-      .map(item => ({
-      title: item.querySelector('title'),
-      link: item.querySelector('link'),
-      description: item.querySelector('description'),
-      pubDate: item.querySelector('pubDate'),
-    }));
-    console.log({ title: this.feed[0].title, link: this.feed[0].link });
+      .map(item => {
+      return {
+        title: item.querySelector('title'),
+        link: item.querySelector('link'),
+        description: item.querySelector('description'),
+        pubDate: item.querySelector('pubDate'),
+      };
+    });
   }
   /*
  <div>
@@ -28,18 +30,27 @@ export class RssReader {
         </div>
         */
   render() {
+    const rssListClassName = `rss-channel ${this.display === 'grid' ? 'grid' : 'list'}`;
     return (h(Host, null,
-      h("h3", null,
-        this.name,
-        " ",
-        this.count),
-      h("a", { href: "{this.url}" }, this.url),
-      this.feed.map(item => (h("div", null,
-        h("h4", null,
-          h("a", { href: item.link.textContent, target: "_blank" }, item.title.textContent)),
-        h("small", null, item.pubDate.textContent),
-        h("p", null, item.description.textContent)))),
-      h("slot", null)));
+      h("div", { class: "rss-reader" },
+        h("h3", null,
+          this.name,
+          " ",
+          this.count),
+        h("a", { href: "{this.url}" }, this.url),
+        h("div", { class: rssListClassName }, this.feed.map(item => (h("div", { class: "rss-article" },
+          h("h4", null,
+            h("a", { href: item.link.textContent, target: "_blank" }, item.title.textContent)),
+          h("small", null, item.pubDate.textContent),
+          h("p", null, item.description.textContent))))),
+        h("slot", null))));
+  }
+  componentDidRender() {
+    if (this.articleWidth) {
+      this.el.shadowRoot.querySelector('.rss-reader').style.setProperty('--article-width', this.articleWidth);
+      console.log('article-width', this.el.shadowRoot.querySelector('.rss-reader').style.getPropertyValue('--article-width'));
+      console.log(this.el.shadowRoot.querySelector('.rss-reader'));
+    }
   }
   static get is() { return "rss-reader"; }
   static get encapsulation() { return "shadow"; }
@@ -103,6 +114,42 @@ export class RssReader {
       "attribute": "count",
       "reflect": false,
       "defaultValue": "5"
+    },
+    "articleWidth": {
+      "type": "string",
+      "mutable": false,
+      "complexType": {
+        "original": "string",
+        "resolved": "string",
+        "references": {}
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": ""
+      },
+      "attribute": "article-width",
+      "reflect": false
+    },
+    "display": {
+      "type": "string",
+      "mutable": false,
+      "complexType": {
+        "original": "'list' | 'grid'",
+        "resolved": "\"grid\" | \"list\"",
+        "references": {}
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": ""
+      },
+      "attribute": "display",
+      "reflect": false,
+      "defaultValue": "'list'"
     }
   }; }
+  static get elementRef() { return "el"; }
 }

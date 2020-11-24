@@ -24,7 +24,9 @@ export namespace Components {
         "middle": string;
     }
     interface RssReader {
+        "articleWidth": string;
         "count": number;
+        "display": 'list' | 'grid';
         "name": string;
         "url": string;
     }
@@ -73,7 +75,9 @@ declare namespace LocalJSX {
         "middle"?: string;
     }
     interface RssReader {
+        "articleWidth"?: string;
         "count"?: number;
+        "display"?: 'list' | 'grid';
         "name"?: string;
         "url"?: string;
     }

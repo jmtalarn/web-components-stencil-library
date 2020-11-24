@@ -36,7 +36,7 @@ const MyComponent = class extends HTMLElement {
   static get style() { return myComponentCss; }
 };
 
-const rssReaderCss = ":host{display:block}";
+const rssReaderCss = ":host{display:block}.rss-reader{--article-grid-width:var(--article-width, 12rem);--article-list-width:var(--article-width, 100%)}.rss-channel.grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit, minmax(var(--article-grid-width), 1fr))}.rss-channel.list .rss-article{width:var(--article-list-width)}.rss-article{line-height:1.5rem;margin:1rem auto;padding:0.5rem}.rss-article h4,.rss-article p{margin:0}";
 
 const RssReader = class extends HTMLElement {
   constructor() {
@@ -46,6 +46,7 @@ const RssReader = class extends HTMLElement {
     this.url = 'https://blog.jmtalarn.com/feed.xml';
     this.name = 'Web dev notes';
     this.count = 5;
+    this.display = 'list';
     this.feed = [];
   }
   async componentWillLoad() {
@@ -54,13 +55,14 @@ const RssReader = class extends HTMLElement {
     this.feed = Array.from(new window.DOMParser().parseFromString(text, 'text/xml').scrollingElement.children[0].children)
       .filter(item => item.tagName === 'item')
       .slice(0, this.count)
-      .map(item => ({
-      title: item.querySelector('title'),
-      link: item.querySelector('link'),
-      description: item.querySelector('description'),
-      pubDate: item.querySelector('pubDate'),
-    }));
-    console.log({ title: this.feed[0].title, link: this.feed[0].link });
+      .map(item => {
+      return {
+        title: item.querySelector('title'),
+        link: item.querySelector('link'),
+        description: item.querySelector('description'),
+        pubDate: item.querySelector('pubDate'),
+      };
+    });
   }
   /*
  <div>
@@ -70,14 +72,23 @@ const RssReader = class extends HTMLElement {
         </div>
         */
   render() {
-    return (h(Host, null, h("h3", null, this.name, " ", this.count), h("a", { href: "{this.url}" }, this.url), this.feed.map(item => (h("div", null, h("h4", null, h("a", { href: item.link.textContent, target: "_blank" }, item.title.textContent)), h("small", null, item.pubDate.textContent), h("p", null, item.description.textContent)))), h("slot", null)));
+    const rssListClassName = `rss-channel ${this.display === 'grid' ? 'grid' : 'list'}`;
+    return (h(Host, null, h("div", { class: "rss-reader" }, h("h3", null, this.name, " ", this.count), h("a", { href: "{this.url}" }, this.url), h("div", { class: rssListClassName }, this.feed.map(item => (h("div", { class: "rss-article" }, h("h4", null, h("a", { href: item.link.textContent, target: "_blank" }, item.title.textContent)), h("small", null, item.pubDate.textContent), h("p", null, item.description.textContent))))), h("slot", null))));
   }
+  componentDidRender() {
+    if (this.articleWidth) {
+      this.el.shadowRoot.querySelector('.rss-reader').style.setProperty('--article-width', this.articleWidth);
+      console.log('article-width', this.el.shadowRoot.querySelector('.rss-reader').style.getPropertyValue('--article-width'));
+      console.log(this.el.shadowRoot.querySelector('.rss-reader'));
+    }
+  }
+  get el() { return this; }
   static get style() { return rssReaderCss; }
 };
 
 const CardComponent$1 = /*@__PURE__*/proxyCustomElement(CardComponent, [1,"card-component",{"cardTitle":[1,"card-title"]}]);
 const MyComponent$1 = /*@__PURE__*/proxyCustomElement(MyComponent, [1,"my-component",{"first":[1],"middle":[1],"last":[1]}]);
-const RssReader$1 = /*@__PURE__*/proxyCustomElement(RssReader, [1,"rss-reader",{"url":[1],"name":[1],"count":[2]}]);
+const RssReader$1 = /*@__PURE__*/proxyCustomElement(RssReader, [1,"rss-reader",{"url":[1],"name":[1],"count":[2],"articleWidth":[1,"article-width"],"display":[1]}]);
 const defineCustomElements = (opts) => {
   if (typeof customElements !== 'undefined') {
     [

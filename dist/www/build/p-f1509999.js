@@ -1,4 +1,4 @@
-import { B as BUILD, c as consoleDevInfo, p as plt, w as win, H, d as doc, N as NAMESPACE, a as promiseResolve, b as bootstrapLazy } from './index-144a4261.js';
+import { B as BUILD, c as consoleDevInfo, p as plt, w as win, H, d as doc, N as NAMESPACE, a as promiseResolve, b as bootstrapLazy } from './index-0a291a44.js';
 import { g as globalScripts } from './app-globals-0f993ce5.js';
 
 /*
@@ -118,5 +118,5 @@ const patchCloneNodeFix = (HTMLElementPrototype) => {
 
 patchBrowser().then(options => {
   globalScripts();
-  return bootstrapLazy([["card-component",[[1,"card-component",{"cardTitle":[1,"card-title"]}]]],["my-component",[[1,"my-component",{"first":[1],"middle":[1],"last":[1]}]]],["rss-reader",[[1,"rss-reader",{"url":[1],"name":[1],"count":[2]}]]]], options);
+  return bootstrapLazy([["card-component",[[1,"card-component",{"cardTitle":[1,"card-title"]}]]],["my-component",[[1,"my-component",{"first":[1],"middle":[1],"last":[1]}]]],["rss-reader",[[1,"rss-reader",{"url":[1],"name":[1],"count":[2],"articleWidth":[1,"article-width"],"display":[1]}]]]], options);
 });

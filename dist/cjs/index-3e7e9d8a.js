@@ -486,6 +486,7 @@ const renderVdom = (hostRef, renderFnResults) => {
     // synchronous patch
     patch(oldVNode, rootVnode);
 };
+const getElement = (ref) => ( getHostRef(ref).$hostElement$ );
 const emitEvent = (elm, name, opts) => {
     const ev = plt.ce(name, opts);
     elm.dispatchEvent(ev);
@@ -584,7 +585,11 @@ const postUpdateComponent = (hostRef) => {
     const tagName = hostRef.$cmpMeta$.$tagName$;
     const elm = hostRef.$hostElement$;
     const endPostUpdate = createTime('postUpdate', tagName);
+    const instance =  hostRef.$lazyInstance$ ;
     const ancestorComponent = hostRef.$ancestorComponent$;
+    {
+        safeCall(instance, 'componentDidRender');
+    }
     if (!(hostRef.$flags$ & 64 /* hasLoadedComponent */)) {
         hostRef.$flags$ |= 64 /* hasLoadedComponent */;
         {
@@ -1014,6 +1019,7 @@ const writeTask = /*@__PURE__*/ queueTask(queueDomWrites, true);
 
 exports.Host = Host;
 exports.bootstrapLazy = bootstrapLazy;
+exports.getElement = getElement;
 exports.h = h;
 exports.promiseResolve = promiseResolve;
 exports.registerInstance = registerInstance;
