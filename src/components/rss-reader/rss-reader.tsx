@@ -52,10 +52,8 @@ export class RssReader {
     return (
       <Host>
         <div class="rss-reader">
-          <h3>
-            {this.name} {this.count}
-          </h3>
-          <a href="{this.url}">{this.url}</a>
+          <h3>{this.name}</h3>
+          <small>These are the last {this.count} articles published there.</small>
           <div class={rssListClassName}>
             {this.feed.map(item => (
               <div class="rss-article">
