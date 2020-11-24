@@ -67,7 +67,7 @@ const RssReader = class {
         </div>
         */
   render() {
-    return (index.h(index.Host, null, index.h("h3", null, this.name, " ", this.count), index.h("a", { href: "{this.url}" }, this.url), index.h("div", null, this.feed.map(item => (index.h("h4", null, index.h("a", { href: item.link.textContent, target: "_blank" }, item.title.textContent))))), index.h("slot", null)));
+    return (index.h(index.Host, null, index.h("h3", null, this.name, " ", this.count), index.h("a", { href: "{this.url}" }, this.url), this.feed.map(item => (index.h("div", null, index.h("h4", null, index.h("a", { href: item.link.textContent, target: "_blank" }, item.title.textContent)), index.h("small", null, item.pubDate.textContent), index.h("p", null, item.description.textContent)))), index.h("slot", null)));
   }
 };
 RssReader.style = rssReaderCss;

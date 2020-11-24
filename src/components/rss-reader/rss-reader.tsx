@@ -48,15 +48,19 @@ export class RssReader {
           {this.name} {this.count}
         </h3>
         <a href="{this.url}">{this.url}</a>
-        <div>
-          {this.feed.map(item => (
+
+        {this.feed.map(item => (
+          <div>
             <h4>
               <a href={item.link.textContent} target="_blank">
                 {item.title.textContent}
               </a>
             </h4>
-          ))}
-        </div>
+            <small>{item.pubDate.textContent}</small>
+            <p>{item.description.textContent}</p>
+          </div>
+        ))}
+
         <slot></slot>
       </Host>
     );

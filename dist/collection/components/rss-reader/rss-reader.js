@@ -34,8 +34,11 @@ export class RssReader {
         " ",
         this.count),
       h("a", { href: "{this.url}" }, this.url),
-      h("div", null, this.feed.map(item => (h("h4", null,
-        h("a", { href: item.link.textContent, target: "_blank" }, item.title.textContent))))),
+      this.feed.map(item => (h("div", null,
+        h("h4", null,
+          h("a", { href: item.link.textContent, target: "_blank" }, item.title.textContent)),
+        h("small", null, item.pubDate.textContent),
+        h("p", null, item.description.textContent)))),
       h("slot", null)));
   }
   static get is() { return "rss-reader"; }
