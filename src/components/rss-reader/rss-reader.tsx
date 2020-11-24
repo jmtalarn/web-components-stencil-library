@@ -12,7 +12,7 @@ export class RssReader {
   thing: string = 'Nothing here';
   async componentWillLoad() {
     const ret = await fetch(this.url);
-
+    console.log('HEYO');
     this.thing = await ret.text();
   }
 
