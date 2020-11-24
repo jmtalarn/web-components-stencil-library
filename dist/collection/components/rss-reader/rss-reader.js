@@ -4,6 +4,11 @@ export class RssReader {
     this.url = 'https://blog.jmtalarn.com/feed.xml';
     this.name = 'Web dev notes';
     this.count = 5;
+    this.thing = 'Nothing here';
+  }
+  async componentWillLoad() {
+    const ret = await fetch(this.url);
+    this.thing = await ret.text();
   }
   render() {
     return (h(Host, null,
@@ -12,6 +17,7 @@ export class RssReader {
         " ",
         this.count),
       h("a", { href: "{this.url}" }, this.url),
+      h("div", null, this.thing),
       h("slot", null)));
   }
   static get is() { return "rss-reader"; }

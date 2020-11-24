@@ -9,6 +9,13 @@ export class RssReader {
   @Prop() url: string = 'https://blog.jmtalarn.com/feed.xml';
   @Prop() name: string = 'Web dev notes';
   @Prop() count: number = 5;
+  thing: string = 'Nothing here';
+  async componentWillLoad() {
+    const ret = await fetch(this.url);
+
+    this.thing = await ret.text();
+  }
+
   render() {
     return (
       <Host>
@@ -16,6 +23,7 @@ export class RssReader {
           {this.name} {this.count}
         </h3>
         <a href="{this.url}">{this.url}</a>
+        <div>{this.thing}</div>
         <slot></slot>
       </Host>
     );

@@ -1,4 +1,4 @@
-import { r as registerInstance, h, H as Host } from './index-be0ea142.js';
+import { r as registerInstance, h, H as Host } from './index-53492a65.js';
 
 const cardComponentCss = ":host{display:inline-block}article{width:20rem;border-radius:5px;border:none;box-shadow:0px 0px 2px #00000055;padding:0.5rem;margin:0.5rem}article h2.header{margin:0}";
 
@@ -39,9 +39,14 @@ const RssReader = class {
     this.url = 'https://blog.jmtalarn.com/feed.xml';
     this.name = 'Web dev notes';
     this.count = 5;
+    this.thing = 'Nothing here';
+  }
+  async componentWillLoad() {
+    const ret = await fetch(this.url);
+    this.thing = await ret.text();
   }
   render() {
-    return (h(Host, null, h("h3", null, this.name, " ", this.count), h("a", { href: "{this.url}" }, this.url), h("slot", null)));
+    return (h(Host, null, h("h3", null, this.name, " ", this.count), h("a", { href: "{this.url}" }, this.url), h("div", null, this.thing), h("slot", null)));
   }
 };
 RssReader.style = rssReaderCss;

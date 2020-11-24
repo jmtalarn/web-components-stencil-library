@@ -46,9 +46,14 @@ const RssReader = class extends HTMLElement {
     this.url = 'https://blog.jmtalarn.com/feed.xml';
     this.name = 'Web dev notes';
     this.count = 5;
+    this.thing = 'Nothing here';
+  }
+  async componentWillLoad() {
+    const ret = await fetch(this.url);
+    this.thing = await ret.text();
   }
   render() {
-    return (h(Host, null, h("h3", null, this.name, " ", this.count), h("a", { href: "{this.url}" }, this.url), h("slot", null)));
+    return (h(Host, null, h("h3", null, this.name, " ", this.count), h("a", { href: "{this.url}" }, this.url), h("div", null, this.thing), h("slot", null)));
   }
   static get style() { return rssReaderCss; }
 };

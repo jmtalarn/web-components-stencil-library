@@ -2,7 +2,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-const index = require('./index-0d4ae52c.js');
+const index = require('./index-7511f354.js');
 
 const cardComponentCss = ":host{display:inline-block}article{width:20rem;border-radius:5px;border:none;box-shadow:0px 0px 2px #00000055;padding:0.5rem;margin:0.5rem}article h2.header{margin:0}";
 
@@ -43,9 +43,14 @@ const RssReader = class {
     this.url = 'https://blog.jmtalarn.com/feed.xml';
     this.name = 'Web dev notes';
     this.count = 5;
+    this.thing = 'Nothing here';
+  }
+  async componentWillLoad() {
+    const ret = await fetch(this.url);
+    this.thing = await ret.text();
   }
   render() {
-    return (index.h(index.Host, null, index.h("h3", null, this.name, " ", this.count), index.h("a", { href: "{this.url}" }, this.url), index.h("slot", null)));
+    return (index.h(index.Host, null, index.h("h3", null, this.name, " ", this.count), index.h("a", { href: "{this.url}" }, this.url), index.h("div", null, this.thing), index.h("slot", null)));
   }
 };
 RssReader.style = rssReaderCss;
