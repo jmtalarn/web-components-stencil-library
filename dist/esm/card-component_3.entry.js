@@ -1,4 +1,35 @@
-import { r as registerInstance, h, e as Host } from './index-144a4261.js';
+import { r as registerInstance, h, H as Host } from './index-53492a65.js';
+
+const cardComponentCss = ":host{display:inline-block}article{width:20rem;border-radius:5px;border:none;box-shadow:0px 0px 2px #00000055;padding:0.5rem;margin:0.5rem}article h2.header{margin:0}";
+
+const CardComponent = class {
+  constructor(hostRef) {
+    registerInstance(this, hostRef);
+  }
+  render() {
+    return (h(Host, null, h("article", null, h("header", null, h("h2", { class: "header" }, this.cardTitle)), h("p", { class: "content" }, h("slot", { name: "content" })), h("footer", null, h("slot", { name: "cta" })))));
+  }
+};
+CardComponent.style = cardComponentCss;
+
+function format(first, middle, last) {
+  return (first || '') + (middle ? ` ${middle}` : '') + (last ? ` ${last}` : '');
+}
+
+const myComponentCss = ":host{display:block}";
+
+const MyComponent = class {
+  constructor(hostRef) {
+    registerInstance(this, hostRef);
+  }
+  getText() {
+    return format(this.first, this.middle, this.last);
+  }
+  render() {
+    return h("div", null, "Hello, World! I'm ", this.getText());
+  }
+};
+MyComponent.style = myComponentCss;
 
 const rssReaderCss = ":host{display:block}";
 
@@ -37,4 +68,4 @@ const RssReader = class {
 };
 RssReader.style = rssReaderCss;
 
-export { RssReader as rss_reader };
+export { CardComponent as card_component, MyComponent as my_component, RssReader as rss_reader };

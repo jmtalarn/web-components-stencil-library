@@ -1,0 +1,16 @@
+:host {
+  display: inline-block;
+}
+
+article {
+  width: 20rem;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 0px 0px 2px #00000055;
+  padding: 0.5rem;
+  margin: 0.5rem;
+}
+
+article h2.header {
+  margin: 0;
+}
