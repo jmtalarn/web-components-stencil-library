@@ -1,5 +1,12 @@
 import { Component, Host, h, Prop } from '@stencil/core';
 
+interface RssItem {
+  title: HTMLTitleElement;
+  link: HTMLLinkElement;
+  description: Element;
+  pubDate: Element;
+}
+
 @Component({
   tag: 'rss-reader',
   styleUrl: 'rss-reader.css',
@@ -9,13 +16,31 @@ export class RssReader {
   @Prop() url: string = 'https://blog.jmtalarn.com/feed.xml';
   @Prop() name: string = 'Web dev notes';
   @Prop() count: number = 5;
-  thing: string = 'Nothing here';
+  feed: Array<RssItem> = [];
+
   async componentWillLoad() {
     const ret = await fetch(this.url);
-    console.log('HEYO');
-    this.thing = await ret.text();
-  }
 
+    const text = await ret.text();
+
+    this.feed = Array.from(new window.DOMParser().parseFromString(text, 'text/xml').scrollingElement.children[0].children)
+      .filter(item => item.tagName === 'item')
+      .slice(0, this.count)
+      .map(item => ({
+        title: item.querySelector('title'),
+        link: item.querySelector('link'),
+        description: item.querySelector('description'),
+        pubDate: item.querySelector('pubDate'),
+      }));
+    console.log({ title: this.feed[0].title, link: this.feed[0].link });
+  }
+  /*
+ <div>
+          {this.feed.map(item => (
+            <h4>{item.title}</h4>
+          ))}
+        </div>
+        */
   render() {
     return (
       <Host>
@@ -23,7 +48,15 @@ export class RssReader {
           {this.name} {this.count}
         </h3>
         <a href="{this.url}">{this.url}</a>
-        <div>{this.thing}</div>
+        <div>
+          {this.feed.map(item => (
+            <h4>
+              <a href={item.link.textContent} target="_blank">
+                {item.title.textContent}
+              </a>
+            </h4>
+          ))}
+        </div>
         <slot></slot>
       </Host>
     );
