@@ -1,5 +1,5 @@
 # We want to include this folder dist/
-www/
+# We will include this folder www/ into dist
 loader/
 
 *~
