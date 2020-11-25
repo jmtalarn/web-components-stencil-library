@@ -69,10 +69,11 @@ const RssReader = class {
     return (h(Host, null, h("div", { class: "rss-reader" }, h("h3", null, this.name), h("small", null, "These are the last ", this.count, " articles published there."), h("div", { class: rssListClassName }, this.feed.map((item) => (h("div", { class: "rss-article" }, h("h4", null, h("a", { href: item.link.textContent, target: "_blank" }, item.title.textContent)), h("small", null, item.pubDate.textContent), h("p", null, item.description.textContent))))), h("slot", null))));
   }
   componentDidRender() {
+    const rssReader = this.el.shadowRoot.querySelector('.rss-reader');
     if (this.articleStyle) {
-      const rssArticles = this.el.shadowRoot.querySelectorAll('.rss-article');
-      Array.from(rssArticles).forEach((article) => {
-        article.style = this.articleStyle;
+      const rssArticles = Array.from(rssReader.querySelectorAll('.rss-article'));
+      rssArticles.forEach((article) => {
+        article.style.cssText = this.articleStyle;
       });
     }
     if (this.articleWidth) {

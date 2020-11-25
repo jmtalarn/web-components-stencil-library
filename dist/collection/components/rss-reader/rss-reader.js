@@ -46,10 +46,11 @@ export class RssReader {
         h("slot", null))));
   }
   componentDidRender() {
+    const rssReader = this.el.shadowRoot.querySelector('.rss-reader');
     if (this.articleStyle) {
-      const rssArticles = this.el.shadowRoot.querySelectorAll('.rss-article');
-      Array.from(rssArticles).forEach((article) => {
-        article.style = this.articleStyle;
+      const rssArticles = Array.from(rssReader.querySelectorAll('.rss-article'));
+      rssArticles.forEach((article) => {
+        article.style.cssText = this.articleStyle;
       });
     }
     if (this.articleWidth) {
