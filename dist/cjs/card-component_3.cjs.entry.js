@@ -50,9 +50,9 @@ const RssReader = class {
     const ret = await fetch(this.url);
     const text = await ret.text();
     this.feed = Array.from(new window.DOMParser().parseFromString(text, 'text/xml').scrollingElement.children[0].children)
-      .filter(item => item.tagName === 'item')
+      .filter((item) => item.tagName === 'item')
       .slice(0, this.count)
-      .map(item => {
+      .map((item) => {
       return {
         title: item.querySelector('title'),
         link: item.querySelector('link'),
@@ -63,20 +63,24 @@ const RssReader = class {
   }
   /*
  <div>
-          {this.feed.map(item => (
-            <h4>{item.title}</h4>
-          ))}
-        </div>
-        */
+      {this.feed.map(item => (
+      <h4>{item.title}</h4>
+      ))}
+    </div>
+    */
   render() {
     const rssListClassName = `rss-channel ${this.display === 'grid' ? 'grid' : 'list'}`;
-    return (index.h(index.Host, null, index.h("div", { class: "rss-reader" }, index.h("h3", null, this.name), index.h("small", null, "These are the last ", this.count, " articles published there."), index.h("div", { class: rssListClassName }, this.feed.map(item => (index.h("div", { class: "rss-article" }, index.h("h4", null, index.h("a", { href: item.link.textContent, target: "_blank" }, item.title.textContent)), index.h("small", null, item.pubDate.textContent), index.h("p", null, item.description.textContent))))), index.h("slot", null))));
+    return (index.h(index.Host, null, index.h("div", { class: "rss-reader" }, index.h("h3", null, this.name), index.h("small", null, "These are the last ", this.count, " articles published there."), index.h("div", { class: rssListClassName }, this.feed.map((item) => (index.h("div", { class: "rss-article" }, index.h("h4", null, index.h("a", { href: item.link.textContent, target: "_blank" }, item.title.textContent)), index.h("small", null, item.pubDate.textContent), index.h("p", null, item.description.textContent))))), index.h("slot", null))));
   }
   componentDidRender() {
+    if (this.articleStyle) {
+      const rssArticles = this.el.shadowRoot.querySelectorAll('.rss-article');
+      Array.from(rssArticles).forEach((article) => {
+        article.style = this.articleStyle;
+      });
+    }
     if (this.articleWidth) {
-      this.el.shadowRoot.querySelector('.rss-reader').style.setProperty('--article-width', this.articleWidth);
-      console.log('article-width', this.el.shadowRoot.querySelector('.rss-reader').style.getPropertyValue('--article-width'));
-      console.log(this.el.shadowRoot.querySelector('.rss-reader'));
+      rssReader.style.setProperty('--article-width', this.articleWidth);
     }
   }
   get el() { return index.getElement(this); }

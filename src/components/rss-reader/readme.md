@@ -9,6 +9,7 @@
 
 | Property       | Attribute       | Description | Type               | Default                                |
 | -------------- | --------------- | ----------- | ------------------ | -------------------------------------- |
+| `articleStyle` | `article-style` |             | `string`           | `undefined`                            |
 | `articleWidth` | `article-width` |             | `string`           | `undefined`                            |
 | `count`        | `count`         |             | `number`           | `5`                                    |
 | `display`      | `display`       |             | `"grid" \| "list"` | `'list'`                               |

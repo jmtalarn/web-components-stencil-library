@@ -11,6 +11,7 @@ export declare class RssReader {
   count: number;
   articleWidth: string;
   display: 'list' | 'grid';
+  articleStyle: string;
   feed: Array<RssItem>;
   componentWillLoad(): Promise<void>;
   render(): any;
