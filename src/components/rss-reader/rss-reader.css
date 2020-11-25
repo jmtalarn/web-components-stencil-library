@@ -1,24 +1,36 @@
 :host {
-  display: block;
+	display: block;
 }
 .rss-reader {
-  --article-grid-width: var(--article-width, 12rem);
-  --article-list-width: var(--article-width, 100%);
+	--article-grid-width: var(--article-width, 12rem);
+	--article-list-width: var(--article-width, 100%);
 }
 .rss-channel.grid {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(var(--article-grid-width), 1fr));
+	display: grid;
+	gap: 1rem;
+	grid-template-columns: repeat(auto-fit, minmax(var(--article-grid-width), 1fr));
 }
 .rss-channel.list .rss-article {
-  width: var(--article-list-width);
+	width: var(--article-list-width);
 }
+
 .rss-article {
-  line-height: 1.5rem;
-  margin: 1rem auto;
-  padding: 0.5rem;
+	position: relative;
+	line-height: 1.5rem;
+	margin: 1rem auto;
+	padding: 0.5rem;
+	display: flex;
+	flex-direction: column;
 }
 .rss-article h4,
 .rss-article p {
-  margin: 0;
+	margin: 0;
+}
+.rss-article p {
+	height: var(--article-excerpt-height, auto);
+	overflow: hidden;
+}
+.rss-article .read-more {
+	margin-top: auto;
+	text-align: right;
 }

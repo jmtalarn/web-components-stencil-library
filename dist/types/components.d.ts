@@ -24,11 +24,13 @@ export namespace Components {
         "middle": string;
     }
     interface RssReader {
+        "articleExcerptHeight": string;
         "articleStyle": string;
         "articleWidth": string;
         "count": number;
         "display": 'list' | 'grid';
         "name": string;
+        "readMore": string;
         "url": string;
     }
 }
@@ -76,11 +78,13 @@ declare namespace LocalJSX {
         "middle"?: string;
     }
     interface RssReader {
+        "articleExcerptHeight"?: string;
         "articleStyle"?: string;
         "articleWidth"?: string;
         "count"?: number;
         "display"?: 'list' | 'grid';
         "name"?: string;
+        "readMore"?: string;
         "url"?: string;
     }
     interface IntrinsicElements {

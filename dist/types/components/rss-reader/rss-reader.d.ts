@@ -12,6 +12,8 @@ export declare class RssReader {
   articleWidth: string;
   display: 'list' | 'grid';
   articleStyle: string;
+  articleExcerptHeight: string;
+  readMore: string;
   feed: Array<RssItem>;
   componentWillLoad(): Promise<void>;
   render(): any;

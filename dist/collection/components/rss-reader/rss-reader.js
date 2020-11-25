@@ -5,6 +5,7 @@ export class RssReader {
     this.name = 'Web dev notes';
     this.count = 5;
     this.display = 'list';
+    this.readMore = 'Read more...';
     this.feed = [];
   }
   async componentWillLoad() {
@@ -39,10 +40,10 @@ export class RssReader {
           this.count,
           " articles published there."),
         h("div", { class: rssListClassName }, this.feed.map((item) => (h("div", { class: "rss-article" },
-          h("h4", null,
-            h("a", { href: item.link.textContent, target: "_blank" }, item.title.textContent)),
+          h("h4", null, item.title.textContent),
           h("small", null, item.pubDate.textContent),
-          h("p", null, item.description.textContent))))),
+          h("p", null, item.description.textContent),
+          h("a", { class: "read-more", href: item.link.textContent, target: "_blank" }, this.readMore))))),
         h("slot", null))));
   }
   componentDidRender() {
@@ -52,6 +53,9 @@ export class RssReader {
       rssArticles.forEach((article) => {
         article.style.cssText = this.articleStyle;
       });
+    }
+    if (this.articleExcerptHeight) {
+      rssReader.style.setProperty('--article-excerpt-height', this.articleExcerptHeight);
     }
     if (this.articleWidth) {
       rssReader.style.setProperty('--article-width', this.articleWidth);
@@ -171,6 +175,41 @@ export class RssReader {
       },
       "attribute": "article-style",
       "reflect": false
+    },
+    "articleExcerptHeight": {
+      "type": "string",
+      "mutable": false,
+      "complexType": {
+        "original": "string",
+        "resolved": "string",
+        "references": {}
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": ""
+      },
+      "attribute": "article-excerpt-height",
+      "reflect": false
+    },
+    "readMore": {
+      "type": "string",
+      "mutable": false,
+      "complexType": {
+        "original": "string",
+        "resolved": "string",
+        "references": {}
+      },
+      "required": false,
+      "optional": false,
+      "docs": {
+        "tags": [],
+        "text": ""
+      },
+      "attribute": "read-more",
+      "reflect": false,
+      "defaultValue": "'Read more...'"
     }
   }; }
   static get elementRef() { return "el"; }

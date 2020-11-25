@@ -35,7 +35,7 @@ const MyComponent = class {
 };
 MyComponent.style = myComponentCss;
 
-const rssReaderCss = ":host{display:block}.rss-reader{--article-grid-width:var(--article-width, 12rem);--article-list-width:var(--article-width, 100%)}.rss-channel.grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit, minmax(var(--article-grid-width), 1fr))}.rss-channel.list .rss-article{width:var(--article-list-width)}.rss-article{line-height:1.5rem;margin:1rem auto;padding:0.5rem}.rss-article h4,.rss-article p{margin:0}";
+const rssReaderCss = ":host{display:block}.rss-reader{--article-grid-width:var(--article-width, 12rem);--article-list-width:var(--article-width, 100%)}.rss-channel.grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit, minmax(var(--article-grid-width), 1fr))}.rss-channel.list .rss-article{width:var(--article-list-width)}.rss-article{position:relative;line-height:1.5rem;margin:1rem auto;padding:0.5rem;display:flex;flex-direction:column}.rss-article h4,.rss-article p{margin:0}.rss-article p{height:var(--article-excerpt-height, auto);overflow:hidden}.rss-article .read-more{margin-top:auto;text-align:right}";
 
 const RssReader = class {
   constructor(hostRef) {
@@ -44,6 +44,7 @@ const RssReader = class {
     this.name = 'Web dev notes';
     this.count = 5;
     this.display = 'list';
+    this.readMore = 'Read more...';
     this.feed = [];
   }
   async componentWillLoad() {
@@ -70,7 +71,7 @@ const RssReader = class {
     */
   render() {
     const rssListClassName = `rss-channel ${this.display === 'grid' ? 'grid' : 'list'}`;
-    return (index.h(index.Host, null, index.h("div", { class: "rss-reader" }, index.h("h3", null, this.name), index.h("small", null, "These are the last ", this.count, " articles published there."), index.h("div", { class: rssListClassName }, this.feed.map((item) => (index.h("div", { class: "rss-article" }, index.h("h4", null, index.h("a", { href: item.link.textContent, target: "_blank" }, item.title.textContent)), index.h("small", null, item.pubDate.textContent), index.h("p", null, item.description.textContent))))), index.h("slot", null))));
+    return (index.h(index.Host, null, index.h("div", { class: "rss-reader" }, index.h("h3", null, this.name), index.h("small", null, "These are the last ", this.count, " articles published there."), index.h("div", { class: rssListClassName }, this.feed.map((item) => (index.h("div", { class: "rss-article" }, index.h("h4", null, item.title.textContent), index.h("small", null, item.pubDate.textContent), index.h("p", null, item.description.textContent), index.h("a", { class: "read-more", href: item.link.textContent, target: "_blank" }, this.readMore))))), index.h("slot", null))));
   }
   componentDidRender() {
     const rssReader = this.el.shadowRoot.querySelector('.rss-reader');
@@ -79,6 +80,9 @@ const RssReader = class {
       rssArticles.forEach((article) => {
         article.style.cssText = this.articleStyle;
       });
+    }
+    if (this.articleExcerptHeight) {
+      rssReader.style.setProperty('--article-excerpt-height', this.articleExcerptHeight);
     }
     if (this.articleWidth) {
       rssReader.style.setProperty('--article-width', this.articleWidth);

@@ -21,6 +21,8 @@ export class RssReader {
 	@Prop() articleWidth: string;
 	@Prop() display: 'list' | 'grid' = 'list';
 	@Prop() articleStyle: string;
+	@Prop() articleExcerptHeight: string;
+	@Prop() readMore: string = 'Read more...';
 
 	feed: Array<RssItem> = [];
 
@@ -61,13 +63,12 @@ export class RssReader {
 					<div class={rssListClassName}>
 						{this.feed.map((item) => (
 							<div class="rss-article">
-								<h4>
-									<a href={item.link.textContent} target="_blank">
-										{item.title.textContent}
-									</a>
-								</h4>
+								<h4>{item.title.textContent}</h4>
 								<small>{item.pubDate.textContent}</small>
 								<p>{item.description.textContent}</p>
+								<a class="read-more" href={item.link.textContent} target="_blank">
+									{this.readMore}
+								</a>
 							</div>
 						))}
 					</div>
@@ -85,7 +86,9 @@ export class RssReader {
 				article.style.cssText = this.articleStyle;
 			});
 		}
-
+		if (this.articleExcerptHeight) {
+			rssReader.style.setProperty('--article-excerpt-height', this.articleExcerptHeight);
+		}
 		if (this.articleWidth) {
 			rssReader.style.setProperty('--article-width', this.articleWidth);
 		}
